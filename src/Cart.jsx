@@ -36,24 +36,16 @@ class Cart extends Component {
       products,
     });
   };
-  decreaseQuantity = () => {
-    // this.setState({
-    //   qty: this.state.qty - 1,
-    // });
-    const { qty } = this.state;
-    if (qty === 0) {
+  decreaseQuantity = (product) => {
+    console.log("my product", product);
+    const { products } = this.state;
+
+    var index = products.indexOf(product);
+    if (products[index].qty === 0) {
       return;
     }
-    this.setState(
-      (prevState) => {
-        return {
-          qty: prevState.qty - 1,
-        };
-      },
-      () => {
-        console.log(this.state.qty);
-      }
-    );
+    products[index].qty -= 1;
+    this.setState(products);
   };
   render() {
     const { products } = this.state;
