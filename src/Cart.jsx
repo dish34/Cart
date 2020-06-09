@@ -27,12 +27,47 @@ class Cart extends Component {
       },
     ],
   };
+  increaseQuantity = (product) => {
+    console.log("increase this", product);
+    const { products } = this.state;
+    var index = products.indexOf(product);
+    products[index].qty += 1;
+    this.setState({
+      products,
+    });
+  };
+  decreaseQuantity = () => {
+    // this.setState({
+    //   qty: this.state.qty - 1,
+    // });
+    const { qty } = this.state;
+    if (qty === 0) {
+      return;
+    }
+    this.setState(
+      (prevState) => {
+        return {
+          qty: prevState.qty - 1,
+        };
+      },
+      () => {
+        console.log(this.state.qty);
+      }
+    );
+  };
   render() {
     const { products } = this.state;
     return (
       <div className="cart">
         {products.map((product) => {
-          return <CartItem product={product} key={product.id}></CartItem>;
+          return (
+            <CartItem
+              product={product}
+              key={product.id}
+              increaseQuantity={this.increaseQuantity}
+              decreaseQuantity={this.decreaseQuantity}
+            ></CartItem>
+          );
         })}
       </div>
     );
